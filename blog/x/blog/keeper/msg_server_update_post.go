@@ -19,13 +19,14 @@ func (k msgServer) UpdatePost(goCtx context.Context, msg *types.MsgUpdatePost) (
 		Title:   msg.Title,
 		Body:    msg.Body,
 	}
-	val, found := k.GetPost(ctx, msg.Id)
+	_, found := k.GetPost(ctx, msg.Id)
 	if !found {
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("key %d doesn't exist", msg.Id))
 	}
-	if msg.Creator != val.Creator {
-		return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
-	}
+	// if msg.Creator != val.Creator {
+	// 	return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
+	// }
+	// The consensus-breaking change
 	k.SetPost(ctx, post)
 	return &types.MsgUpdatePostResponse{}, nil
 }
