@@ -31,6 +31,13 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{},
 				},
 
+				{
+					RpcMethod:      "FilterPost",
+					Use:            "filter-post [keyword]",
+					Short:          "Query filter-post",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "keyword"}},
+				},
+
 				// this line is used by ignite scaffolding # autocli/query
 			},
 		},

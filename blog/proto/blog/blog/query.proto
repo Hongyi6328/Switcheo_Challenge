@@ -31,6 +31,12 @@ service Query {
     option (google.api.http).get = "/blog/blog/list_post";
   
   }
+  
+  // Queries a list of FilterPost items.
+  rpc FilterPost (QueryFilterPostRequest) returns (QueryFilterPostResponse) {
+    option (google.api.http).get = "/blog/blog/filter_post/{keyword}";
+  
+  }
 }
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
@@ -55,6 +61,16 @@ message QueryListPostRequest {
 }
 
 message QueryListPostResponse {
+  repeated Post                                   post       = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryFilterPostRequest {
+  string                                keyword    = 1;
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryFilterPostResponse {
   repeated Post post = 1 [(gogoproto.nullable) = false];
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
