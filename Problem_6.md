@@ -17,17 +17,17 @@ Suppose in the network there is a broadcaster `B` and some listners `L`. `B` mai
 # Broadcaster
 Normal State:
 
-    1. Accepts new transaction requests (returns 200 OK) if the size of the list of undelivered transactions is below some threshold, say `b`. Send new transactions to every `L`.
-    2. On receipt of `ID_L` for each `L`, if `ID_L` is less than some `ID_TX` in the undelivered list, then send such transactions to `L` immediately.
-    3. If the same `ID_L` is received for `c` times or is received `d` seconds ago, transits to the abnormal state. Marks this `L` as faulty.
-    4. If no messages have been received from some `L` for `e` seconds and `ID_L` is less than some `ID_TX` in the undelivered list, transits to the abnormal state. Marks this `L` as faulty.
+ 1. Accepts new transaction requests (returns 200 OK) if the size of the list of undelivered transactions is below some threshold, say `b`. Send new transactions to every `L`.
+ 2. On receipt of `ID_L` for each `L`, if `ID_L` is less than some `ID_TX` in the undelivered list, then send such transactions to `L` immediately.
+ 3. If the same `ID_L` is received for `c` times or is received `d` seconds ago, transits to the abnormal state. Marks this `L` as faulty.
+ 4. If no messages have been received from some `L` for `e` seconds and `ID_L` is less than some `ID_TX` in the undelivered list, transits to the abnormal state. Marks this `L` as faulty.
 
 Abnormal State:
 
-    1. Rejects every new transaction request (returns 503 Service Unavailable).
-    2. Sends existing undelivered transactions to each non-faulty `L` as in the normal state.
-    3. Handles `ID_L` and new faulty `L` as in the normal state.
-    4. A faulty `L` becomes non-faulty if it has been active sending responses for `f` seconds or `g` times.
-    5. Transits to the normal state if there are no faulty `L`.
+ 1. Rejects every new transaction request (returns 503 Service Unavailable).
+ 2. Sends existing undelivered transactions to each non-faulty `L` as in the normal state.
+ 3. Handles `ID_L` and new faulty `L` as in the normal state.
+ 4. A faulty `L` becomes non-faulty if it has been active sending responses for `f` seconds or `g` times.
+ 5. Transits to the normal state if there are no faulty `L`.
 
 The parameters, `a, b, c, d, e, f, g` can be fine-tuned to meet the time and probability requirements.
